@@ -109,15 +109,15 @@ AppShell (认证后)
 - [x] Vite + React + Tailwind 渲染首页
 - **产出**：两个服务可启动，数据库连接成功 → [学习文档](docs/phase-0-scaffolding.md)
 
-### Phase 1: 认证系统 (预计 4-5 天)
+### Phase 1: 认证系统 ✅ (完成日期: 2026-06-14)
 
-- [ ] User + RefreshToken 模型，Prisma 迁移
-- [ ] 注册/登录/Token 刷新/登出 API
-- [ ] JWT access (15min) + httpOnly refresh cookie (7d)
-- [ ] Google/GitHub OAuth 登录
-- [ ] 前端：LoginPage, RegisterPage, authStore, ProtectedRoute, axios 拦截器(401 自动刷新)
-- **产出**：完整认证流 + OAuth，可登录看到受保护页面
-- 📖 **学习文档**：JWT 双 Token 机制、httpOnly Cookie 安全模型、OAuth2 授权码流程
+- [x] User + RefreshToken 模型
+- [x] 注册/登录/Token 刷新/登出 API (5 端点已测试通过)
+- [x] JWT access (15min) + httpOnly refresh cookie (7d) + Token Rotation
+- [x] Google/GitHub OAuth 登录 (授权码流程，后端交换 code)
+- [x] 前端：LoginPage, RegisterPage, OAuthCallback, authStore, ProtectedRoute, axios 拦截器(401 自动刷新 + 并发排队)
+- **产出**：完整认证流 + OAuth，可登录看到 Dashboard
+- 📖 [学习文档](docs/phase-1-authentication.md)
 
 ### Phase 2: 工作区 + 权限 (预计 4-5 天)
 

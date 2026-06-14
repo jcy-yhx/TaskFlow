@@ -18,11 +18,14 @@
     "test": "npm -w packages/backend run test && npm -w packages/frontend run test"
   },
   "devDependencies": {
-    "npm-run-all": "^4.1.5",
-    "typescript": "^5.7.0",
-    "eslint": "^9.0.0",
-    "prettier": "^3.4.0",
     "@typescript-eslint/eslint-plugin": "^8.0.0",
-    "@typescript-eslint/parser": "^8.0.0"
+    "@typescript-eslint/parser": "^8.0.0",
+    "eslint": "^9.0.0",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^3.4.0",
+    "typescript": "^5.7.0"
+  },
+  "dependencies": {
+    "cookie-parser": "^1.4.7"
   }
 }
