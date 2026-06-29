@@ -2,18 +2,11 @@ import type { Request, Response, NextFunction } from 'express';
 import { getPrisma } from '../config/index.js';
 import { ForbiddenError, UnauthenticatedError } from '../utils/errors.js';
 
-// ── RBAC Role enum ──
-const ROLE_HIERARCHY: Record<string, number> = {
-  OWNER: 3,
-  ADMIN: 2,
-  MEMBER: 1,
-};
+const ROLE_HIERARCHY: Record<string, number> = { OWNER: 3, ADMIN: 2, MEMBER: 1 };
 
 /**
- * Require that the authenticated user is a member of the workspace
- * identified by :id param in the route.
- *
- * Attaches `req.workspaceMember` = { workspaceId, role } on success.
+ * Resolve the workspace ID from various param names, then check the user is a member.
+ * Sets `req.workspaceMember` = { workspaceId, role } on success.
  */
 export function requireWorkspaceMembership(
   req: Request,
@@ -21,36 +14,40 @@ export function requireWorkspaceMembership(
   next: NextFunction,
 ): void {
   const userId = req.user?.id;
-  if (!userId) throw new UnauthenticatedError('Authentication required');
+  if (!userId) { next(new UnauthenticatedError('Authentication required')); return; }
 
-  // Routes use :id for workspaceId
-  const workspaceId = req.params.id as string | undefined;
+  // Try direct workspaceId param, or resolve from projectId
+  const wsId = (req.params.id ?? req.params.workspaceId) as string | undefined;
+  const pid = req.params.projectId as string | undefined;
 
-  if (!workspaceId) {
+  if (wsId) {
+    checkMember(userId, wsId, req, next);
+  } else if (pid) {
+    // Resolve workspace from project
+    getPrisma().project.findUnique({ where: { id: pid } })
+      .then((p) => {
+        if (!p) throw new ForbiddenError('Project not found');
+        return checkMember(userId, p.workspaceId, req, next);
+      })
+      .catch(next);
+  } else {
     next();
-    return;
   }
+}
 
-  getPrisma()
-    .workspaceMember.findUnique({
-      where: { userId_workspaceId: { userId, workspaceId } },
-    })
-    .then((member) => {
-      if (!member) {
-        throw new ForbiddenError('You are not a member of this workspace');
-      }
-      req.workspaceMember = { workspaceId, role: member.role };
-      next();
-    })
-    .catch(next);
+async function checkMember(userId: string, workspaceId: string, req: Request, next: NextFunction) {
+  const member = await getPrisma().workspaceMember.findUnique({
+    where: { userId_workspaceId: { userId, workspaceId } },
+  });
+  if (!member) {
+    throw new ForbiddenError('You are not a member of this workspace');
+  }
+  req.workspaceMember = { workspaceId, role: member.role };
+  next();
 }
 
 /**
- * Factory: create middleware that requires a minimum role.
- * Must be used after `requireWorkspaceMembership`.
- *
- * @example
- * router.patch('/:id', authenticate, requireWorkspaceMembership, requireRole('ADMIN'), controller.update);
+ * Factory: require minimum role. Must run after requireWorkspaceMembership.
  */
 export function requireRole(minRole: string) {
   const minLevel = ROLE_HIERARCHY[minRole] ?? 0;
@@ -58,14 +55,14 @@ export function requireRole(minRole: string) {
   return (req: Request, _res: Response, next: NextFunction): void => {
     const member = req.workspaceMember;
     if (!member) {
-      throw new ForbiddenError('Workspace membership required');
+      next(new ForbiddenError('Workspace membership required'));
+      return;
     }
-
     const userLevel = ROLE_HIERARCHY[member.role] ?? 0;
     if (userLevel < minLevel) {
-      throw new ForbiddenError(`This action requires at least ${minRole} role`);
+      next(new ForbiddenError(`This action requires at least ${minRole} role`));
+      return;
     }
-
     next();
   };
 }

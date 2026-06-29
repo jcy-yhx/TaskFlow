@@ -8,6 +8,8 @@ import { errorHandler } from './middleware/error-handler.js';
 import authRoutes from './routes/auth.routes.js';
 import userRoutes from './routes/user.routes.js';
 import workspaceRoutes from './routes/workspace.routes.js';
+import projectRoutes from './routes/project.routes.js';
+import taskRoutes from './routes/task.routes.js';
 
 const logger = getLogger();
 
@@ -72,6 +74,14 @@ export function createApp() {
 
   // Workspace routes
   app.use('/api/workspaces', workspaceRoutes);
+
+  // Project routes (nested under workspaces + direct access)
+  app.use('/api/workspaces/:workspaceId/projects', projectRoutes);
+  app.use('/api/projects', projectRoutes);
+
+  // Task routes (nested under projects + direct access)
+  app.use('/api/projects/:projectId/tasks', taskRoutes);
+  app.use('/api/tasks', taskRoutes);
 
   // More API routes (to be added in later phases)
 

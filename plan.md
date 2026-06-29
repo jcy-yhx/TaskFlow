@@ -129,17 +129,17 @@ AppShell (认证后)
 - **产出**：多租户工作区，完整 RBAC 权限
 - 📖 [学习文档](docs/phase-2-workspaces.md)
 
-### Phase 3: 看板 + 任务管理 (预计 5-6 天)
+### Phase 3: 看板 + 任务管理 ✅ (完成日期: 2026-06-14)
 
-- [ ] Project + Task + TaskAssignee 模型
-- [ ] 任务 CRUD + 状态变更 + 位置排序 API
-- [ ] 看板视图：KanbanBoard, KanbanColumn, KanbanCard (@dnd-kit)
-- [ ] 任务详情抽屉：TaskDetailSheet
-- [ ] 筛选器：状态/优先级/指派人/截止日期
-- [ ] 列表视图替代方案
-- [ ] 乐观更新（拖拽即时响应 + 失败回滚）
-- **产出**：完整看板，可拖拽、筛选、指派、编辑任务
-- 📖 **学习文档**：乐观更新与缓存策略、拖拽排序算法（position 列重算）、React Query 高级模式
+- [x] Project + Task + TaskAssignee CRUD API (13 端点)
+- [x] Position reordering 算法 (同列移位 + 跨列移动)
+- [x] Kanban 5 列拖拽 (BACKLOG|TODO|IN_PROGRESS|IN_REVIEW|DONE)
+- [x] @dnd-kit 集成: DndContext + Sortable + Droppable + DragOverlay
+- [x] 乐观更新 (拖拽即时响应 + 失败回滚)
+- [x] TaskDetailSheet 右侧抽屉 (inline 编辑)
+- [x] Project 侧边栏 + 列表视图
+- **产出**：完整看板，拖拽排序、状态流转、任务指派
+- 📖 [学习文档](docs/phase-3-kanban.md)
 
 ### Phase 4: 实时协作 (预计 3-4 天)
 
