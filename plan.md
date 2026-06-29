@@ -141,15 +141,16 @@ AppShell (认证后)
 - **产出**：完整看板，拖拽排序、状态流转、任务指派
 - 📖 [学习文档](docs/phase-3-kanban.md)
 
-### Phase 4: 实时协作 (预计 3-4 天)
+### Phase 4: 实时协作 ✅ (完成日期: 2026-06-29)
 
-- [ ] Socket.IO 服务端集成 + 认证中间件
-- [ ] Room 管理 + 事件发射
-- [ ] 前端 useSocket Hook + 房间加入/离开
-- [ ] Socket 事件驱动 React Query 缓存更新
-- [ ] 在线状态指示 (presence)
+- [x] Socket.IO server + JWT 认证中间件
+- [x] Room 管理 (workspace + project) + presence 广播
+- [x] Controller 层事件发射 (task:created/moved/updated/deleted)
+- [x] 前端 useSocket hook + singleton socket client
+- [x] Socket 事件驱动 React Query 缓存 invalidate
+- [x] 端到端测试：创建任务 → 事件到达 → 移动任务 → 事件到达
 - **产出**：多人实时同步，看板变化即时可见
-- 📖 **学习文档**：WebSocket vs SSE vs 长轮询、Socket.IO 房间模式、事件驱动架构
+- 📖 [学习文档](docs/phase-4-realtime.md)
 
 ### Phase 5: 评论 + 通知 (预计 3-4 天)
 

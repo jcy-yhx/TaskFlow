@@ -13,12 +13,31 @@ const TASK_INCLUDE = {
 } as const;
 
 function formatTask(task: Record<string, unknown>) {
-  const t = task as { assignees: Array<Record<string, unknown>>; _count: { comments: number; attachments: number }; [k: string]: unknown };
+  const t = task as {
+    assignees: Array<Record<string, unknown>>;
+    _count: { comments: number; attachments: number };
+    id: string; projectId: string; title: string;
+    status: string; priority: string; position: number;
+    creatorId: string; createdAt: Date; updatedAt: Date;
+    description: string | null; dueDate: Date | null;
+    [k: string]: unknown;
+  };
   return {
-    ...task,
+    id: t.id,
+    projectId: t.projectId,
+    title: t.title,
+    description: t.description,
+    status: t.status,
+    priority: t.priority,
+    position: t.position,
+    dueDate: t.dueDate,
+    creatorId: t.creatorId,
+    createdAt: t.createdAt,
+    updatedAt: t.updatedAt,
     assignees: t.assignees.map((a: Record<string, unknown>) => a.user),
     commentCount: t._count.comments,
     attachmentCount: t._count.attachments,
+    creator: t.creator,
   };
 }
 

@@ -1,5 +1,7 @@
+import { createServer } from 'node:http';
 import { createApp } from './app.js';
-import { config, getPrisma, getLogger } from './config/index.js';
+import { config, getPrisma, getLogger, setIO } from './config/index.js';
+import { createSocketServer } from './websocket/index.js';
 
 const logger = getLogger();
 
@@ -16,8 +18,14 @@ async function main() {
 
   const app = createApp();
 
-  app.listen(config.port, () => {
+  // Create HTTP server and attach Socket.IO
+  const httpServer = createServer(app);
+  const io = createSocketServer(httpServer, config.frontendUrl);
+  setIO(io);
+
+  httpServer.listen(config.port, () => {
     logger.info(`Server running on http://localhost:${config.port}`);
+    logger.info(`WebSocket ready on ws://localhost:${config.port}`);
     logger.info(`Environment: ${config.nodeEnv}`);
   });
 }

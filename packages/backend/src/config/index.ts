@@ -1,5 +1,6 @@
 import 'dotenv/config';
 import { PrismaClient } from '@prisma/client';
+import type { Server as SocketIOServer } from 'socket.io';
 import { createLogger, type Logger } from '../utils/logger.js';
 
 export const config = {
@@ -50,6 +51,13 @@ export const config = {
 
 let prismaInstance: PrismaClient | null = null;
 let loggerInstance: Logger | null = null;
+let ioInstance: SocketIOServer | null = null;
+
+export function setIO(io: SocketIOServer) { ioInstance = io; }
+export function getIO(): SocketIOServer {
+  if (!ioInstance) throw new Error('Socket.IO not initialized');
+  return ioInstance;
+}
 
 export function getPrisma(): PrismaClient {
   if (!prismaInstance) {

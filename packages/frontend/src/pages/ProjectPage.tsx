@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useTasksByStatus, type TaskStatus } from '@/api/tasks';
-import { useWorkspace } from '@/api/workspaces';
+import { useSocket } from '@/hooks/useSocket';
 import KanbanBoard from '@/components/task/KanbanBoard';
 import TaskForm from '@/components/task/TaskForm';
 import TaskDetailSheet from '@/components/task/TaskDetailSheet';
@@ -9,7 +9,9 @@ import TaskDetailSheet from '@/components/task/TaskDetailSheet';
 export default function ProjectPage() {
   const { projectId, workspaceId } = useParams<{ projectId: string; workspaceId: string }>();
   const { data: tasks, isLoading } = useTasksByStatus(projectId);
-  const { data: workspace } = useWorkspace(workspaceId!);
+
+  // Real-time sync via WebSocket
+  useSocket(workspaceId, projectId);
 
   const [selectedTaskId, setSelectedTaskId] = useState<string | null>(null);
   const [taskFormOpen, setTaskFormOpen] = useState(false);
