@@ -2,6 +2,7 @@ import { useTask, useUpdateTask, useDeleteTask, useAssignTask, useUnassignTask, 
 import { useMembers } from '@/api/workspaces';
 import { useAuthStore } from '@/stores/auth-store';
 import CommentSection from '@/components/comment/CommentSection';
+import FileUpload from '@/components/common/FileUpload';
 import { Button } from '@/components/ui/button';
 import { X, Trash2, UserPlus, UserX, Calendar } from 'lucide-react';
 import { format } from 'date-fns';
@@ -169,6 +170,11 @@ export default function TaskDetailSheet({ taskId, projectId, workspaceId, onClos
                 ))}
               </select>
             )}
+          </div>
+
+          {/* Attachments */}
+          <div className="pt-4 border-t">
+            <FileUpload taskId={task.id} />
           </div>
 
           {/* Comments */}

@@ -163,13 +163,16 @@ AppShell (认证后)
 - **产出**：评论讨论线 + 通知中心 + 未读计数
 - 📖 [学习文档](docs/phase-5-comments-notifications.md)
 
-### Phase 6: 文件上传 (预计 2-3 天)
+### Phase 6: 文件上传 ✅ (完成日期: 2026-06-29)
 
-- [ ] multer 配置 + StorageProvider 接口
-- [ ] 附件上传/下载 API + 头像上传
-- [ ] 前端：FileUpload 拖拽上传组件，文件预览
-- **产出**：头像 + 任务附件上传与下载
-- 📖 **学习文档**：文件上传安全实践、流式处理、存储抽象层设计
+- [x] multer 配置 (memoryStorage + fileFilter + 10MB limit)
+- [x] StorageProvider 抽象层 (storeFile/readFile/deleteFile)
+- [x] 附件上传/下载/删除 API (4 端点)
+- [x] 头像上传 API (替换旧文件)
+- [x] 前端: FileUpload 拖拽上传组件 + ProfilePage 头像上传
+- [x] Vite /uploads 代理配置
+- **产出**：附件管理 + 头像上传，StorageProvider 可扩展
+- 📖 [学习文档](docs/phase-6-file-uploads.md)
 
 ### Phase 7: 全文搜索 (预计 2-3 天)
 
