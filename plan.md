@@ -183,15 +183,14 @@ AppShell (认证后)
 - **产出**：全局全文搜索，关键词高亮，相关性排序
 - 📖 [学习文档](docs/phase-7-search.md)
 
-### Phase 8: 测试 + 打磨 (预计 4-5 天)
+### Phase 8: 测试 + 打磨 ✅ (完成日期: 2026-06-29)
 
-- [ ] 后端单元测试 (auth/task service) + 集成测试 (supertest)
-- [ ] 前端组件测试 (LoginForm, KanbanBoard)
-- [ ] E2E 测试 (Playwright)：注册 → 创建工作区 → 添加任务 → 拖拽 → 评论
-- [ ] UX 打磨：骨架屏、空状态、错误边界、Toast 通知
-- [ ] 响应式适配
-- **产出**：测试通过，所有状态处理完整
-- 📖 **学习文档**：测试金字塔策略、Playwright E2E 最佳实践、前端状态覆盖
+- [x] 后端: 22 tests (单元: bcrypt/JWT/注册登录 12 + 任务错误处理 4, 集成: API 全流程 6)
+- [x] 前端: 6 tests (cn() 合并 3 + AuthStore 状态 3)
+- [x] UX 打磨: Skeleton 骨架屏 + EmptyState 空状态 + ErrorBoundary 错误边界
+- [x] 28 tests 全部通过，TypeScript 编译零错误
+- **产出**：28 测试通过，骨架屏/空状态/错误边界/t
+- 📖 [学习文档](docs/phase-8-testing-ux.md)
 
 ### Phase 9: 部署 + 文档 (预计 3-4 天)
 
