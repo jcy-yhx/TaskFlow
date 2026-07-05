@@ -24,7 +24,7 @@ WORKDIR /app
 # Install only what we need to serve + proxy
 RUN npm init -y > /dev/null 2>&1 \
  && npm pkg set type=module \
- && npm install express@^5 http-proxy-middleware@^3
+ && npm install express@5 http-proxy-middleware@3
 
 COPY packages/frontend/server.js .
 COPY --from=builder /app/packages/frontend/dist ./dist
