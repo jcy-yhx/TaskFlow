@@ -1,44 +1,36 @@
 @import 'tailwindcss';
 
+/* ── TaskFlow Light Theme ── */
 @theme {
-  --color-background: #ffffff;
-  --color-foreground: #0a0a0a;
+  /* Page background — soft off-white, like Linear/Vercel */
+  --color-background: #f8fafc;
+  /* High-contrast text — slate-900 */
+  --color-foreground: #0f172a;
+  /* Cards, dialogs, sidebars — pure white */
   --color-card: #ffffff;
-  --color-card-foreground: #0a0a0a;
-  --color-primary: #171717;
-  --color-primary-foreground: #fafafa;
-  --color-secondary: #f5f5f5;
-  --color-secondary-foreground: #171717;
-  --color-muted: #f5f5f5;
-  --color-muted-foreground: #737373;
-  --color-accent: #f5f5f5;
-  --color-accent-foreground: #171717;
+  --color-card-foreground: #0f172a;
+  /* Primary action color — blue-500 */
+  --color-primary: #3b82f6;
+  --color-primary-foreground: #ffffff;
+  /* Secondary surface */
+  --color-secondary: #f1f5f9;
+  --color-secondary-foreground: #0f172a;
+  /* Muted backgrounds — slate-100 */
+  --color-muted: #f1f5f9;
+  /* Muted text — slate-500, still readable */
+  --color-muted-foreground: #64748b;
+  /* Hover/active accent — blue-50 with a subtle blue tint */
+  --color-accent: #eff6ff;
+  --color-accent-foreground: #1e40af;
+  /* Danger */
   --color-destructive: #ef4444;
-  --color-destructive-foreground: #fafafa;
-  --color-border: #e5e5e5;
-  --color-input: #e5e5e5;
-  --color-ring: #0a0a0a;
-  --radius: 0.5rem;
-}
-
-@media (prefers-color-scheme: dark) {
-  @theme {
-    --color-background: #0a0a0a;
-    --color-foreground: #fafafa;
-    --color-card: #0a0a0a;
-    --color-card-foreground: #fafafa;
-    --color-primary: #fafafa;
-    --color-primary-foreground: #171717;
-    --color-secondary: #262626;
-    --color-secondary-foreground: #fafafa;
-    --color-muted: #262626;
-    --color-muted-foreground: #a3a3a3;
-    --color-accent: #262626;
-    --color-accent-foreground: #fafafa;
-    --color-destructive: #7f1d1d;
-    --color-destructive-foreground: #fafafa;
-    --color-border: #262626;
-    --color-input: #262626;
-    --color-ring: #d4d4d4;
-  }
+  --color-destructive-foreground: #ffffff;
+  /* Borders — soft gray */
+  --color-border: #e2e8f0;
+  /* Input borders */
+  --color-input: #e2e8f0;
+  /* Focus ring — primary blue */
+  --color-ring: #3b82f6;
+  /* Modern rounded corners */
+  --radius: 0.625rem;
 }

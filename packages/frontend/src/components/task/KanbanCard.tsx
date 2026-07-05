@@ -37,7 +37,7 @@ export default function KanbanCard({ task, onClick }: Props) {
       ref={setNodeRef}
       style={style}
       className={cn(
-        'group bg-card border rounded-lg p-3 cursor-pointer hover:shadow-md transition-shadow',
+        'group bg-card border rounded-lg p-3 cursor-pointer shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all',
         isDragging && 'shadow-lg ring-2 ring-primary/20',
       )}
       onClick={onClick}

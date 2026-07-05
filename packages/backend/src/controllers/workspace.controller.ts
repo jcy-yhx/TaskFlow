@@ -1,7 +1,10 @@
 import type { Request, Response, NextFunction } from 'express';
 import * as workspaceService from '../services/workspace.service.js';
+import { sendInvitationEmail } from '../services/email.service.js';
+import { getPrisma, config } from '../config/index.js';
 
-// Helper: Express 5 params need explicit string cast in certain route patterns
+const prisma = getPrisma();
+
 function pid(req: Request, name: string): string {
   return req.params[name] as string;
 }
@@ -75,12 +78,26 @@ export async function removeMember(req: Request, res: Response, next: NextFuncti
 
 export async function createInvitation(req: Request, res: Response, next: NextFunction) {
   try {
+    const workspaceId = pid(req, 'id');
     const invitation = await workspaceService.createInvitation(
-      pid(req, 'id'),
+      workspaceId,
       req.user!.id,
       req.body,
     );
     res.status(201).json({ data: invitation });
+
+    // Send invitation email in the background (don't block the response)
+    const workspace = await prisma.workspace.findUnique({ where: { id: workspaceId }, select: { name: true } });
+    const inviter = await prisma.user.findUnique({ where: { id: req.user!.id }, select: { name: true } });
+    if (workspace && inviter) {
+      sendInvitationEmail({
+        to: invitation.email,
+        inviterName: inviter.name,
+        workspaceName: workspace.name,
+        inviteLink: `${config.frontendUrl}/invitations/${invitation.token}`,
+        role: invitation.role,
+      }).catch(() => { /* fire-and-forget — logged in email service */ });
+    }
   } catch (err) { next(err); }
 }
 

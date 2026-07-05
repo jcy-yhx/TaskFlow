@@ -37,7 +37,7 @@ export default function TaskDetailSheet({ taskId, projectId, workspaceId, onClos
       <div className="fixed inset-0 z-40 bg-black/20" onClick={onClose} />
 
       {/* Sheet */}
-      <div className="fixed right-0 top-0 z-50 h-full w-[480px] max-w-[90vw] bg-card border-l shadow-xl overflow-auto">
+      <div className="fixed right-0 top-0 z-50 h-full w-[480px] max-w-[90vw] bg-card border-l shadow-2xl overflow-auto">
         {/* Header */}
         <div className="sticky top-0 bg-card border-b px-6 py-4 flex items-center justify-between z-10">
           <div className="flex items-center gap-2">

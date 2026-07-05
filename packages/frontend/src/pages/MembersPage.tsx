@@ -8,9 +8,9 @@ import { Plus, UserMinus } from 'lucide-react';
 import { toast } from 'sonner';
 
 const ROLE_BADGE: Record<string, string> = {
-  OWNER: 'bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-300',
-  ADMIN: 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300',
-  MEMBER: 'bg-gray-100 text-gray-800 dark:bg-gray-900/30 dark:text-gray-300',
+  OWNER: 'bg-purple-50 text-purple-700 ring-1 ring-purple-200',
+  ADMIN: 'bg-blue-50 text-blue-700 ring-1 ring-blue-200',
+  MEMBER: 'bg-slate-100 text-slate-700',
 };
 
 export default function MembersPage() {
@@ -42,9 +42,17 @@ export default function MembersPage() {
         {members?.map((member) => (
           <div key={member.id} className="flex items-center justify-between p-3 rounded-lg border bg-card">
             <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center text-sm font-medium">
-                {member.user.name[0].toUpperCase()}
-              </div>
+              {member.user.avatarUrl ? (
+                <img
+                  src={member.user.avatarUrl}
+                  alt={member.user.name}
+                  className="w-8 h-8 rounded-full object-cover ring-2 ring-border"
+                />
+              ) : (
+                <div className="w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-semibold">
+                  {member.user.name[0].toUpperCase()}
+                </div>
+              )}
               <div>
                 <p className="text-sm font-medium">{member.user.name}</p>
                 <p className="text-xs text-muted-foreground">{member.user.email}</p>

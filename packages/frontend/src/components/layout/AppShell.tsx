@@ -30,7 +30,7 @@ export default function AppShell() {
   return (
     <div className="flex h-screen bg-background">
       {/* Sidebar */}
-      <aside className={`${sidebarOpen ? 'w-60' : 'w-0 -translate-x-full'} border-r bg-card shrink-0 transition-all duration-200 overflow-hidden flex flex-col`}>
+      <aside className={`${sidebarOpen ? 'w-60' : 'w-0 -translate-x-full'} border-r bg-card shadow-sm shrink-0 transition-all duration-200 overflow-hidden flex flex-col`}>
         <div className="p-4 border-b">
           <Link to="/" className="text-lg font-bold tracking-tight">
             TaskFlow
@@ -73,7 +73,7 @@ export default function AppShell() {
       {/* Main area */}
       <div className="flex-1 flex flex-col min-w-0">
         {/* Top bar */}
-        <header className="h-12 border-b flex items-center justify-between px-4 bg-card shrink-0">
+        <header className="h-12 border-b flex items-center justify-between px-4 bg-card shadow-sm shrink-0">
           <button
             onClick={() => setSidebarOpen(!sidebarOpen)}
             className="p-1.5 hover:bg-accent rounded-md"

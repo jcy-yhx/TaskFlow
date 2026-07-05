@@ -6,6 +6,7 @@ import { registerSchema, type RegisterInput } from '@taskflow/shared';
 import { useRegister } from '@/api/auth';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { PasswordInput } from '@/components/ui/password-input';
 import { toast } from 'sonner';
 
 export default function RegisterPage() {
@@ -34,10 +35,13 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="rounded-lg border bg-card p-6 shadow-sm">
-      <h2 className="text-lg font-semibold text-foreground mb-4">
+    <div className="rounded-xl border bg-card p-6 shadow-sm">
+      <h2 className="text-lg font-semibold text-foreground mb-1">
         Create your account
       </h2>
+      <p className="text-sm text-muted-foreground mb-4">
+        Get started with a free account. No credit card required.
+      </p>
 
       {serverError && (
         <div className="mb-4 rounded-md bg-destructive/10 p-3 text-sm text-destructive">
@@ -82,9 +86,8 @@ export default function RegisterPage() {
           <label htmlFor="password" className="block text-sm font-medium mb-1">
             Password
           </label>
-          <Input
+          <PasswordInput
             id="password"
-            type="password"
             autoComplete="new-password"
             placeholder="At least 8 characters"
             {...register('password')}
@@ -101,9 +104,9 @@ export default function RegisterPage() {
         </Button>
       </form>
 
-      <div className="mt-4 text-center text-sm text-muted-foreground">
+      <div className="mt-5 text-center text-sm text-muted-foreground">
         Already have an account?{' '}
-        <Link to="/login" className="text-primary hover:underline">
+        <Link to="/login" className="font-medium text-primary hover:underline">
           Sign in
         </Link>
       </div>
