@@ -17,12 +17,17 @@ COPY packages/frontend/vite.config.ts packages/frontend/
 COPY packages/frontend/src packages/frontend/src
 RUN npm -w packages/frontend run build
 
-# ── Serve with nginx ──
-FROM nginx:1.27-alpine AS runner
+# ── Runtime: lightweight Node.js static server with API proxy ──
+FROM node:24-alpine AS runner
+WORKDIR /app
 
-COPY --from=builder /app/packages/frontend/dist /usr/share/nginx/html
-COPY nginx/nginx.railway.conf /etc/nginx/nginx.conf
+# Install only what we need to serve + proxy
+RUN npm init -y > /dev/null 2>&1 && npm install express@^5 http-proxy-middleware@^3
 
+COPY packages/frontend/server.js .
+COPY --from=builder /app/packages/frontend/dist ./dist
+
+ENV PORT=80
 EXPOSE 80
 
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["node", "server.js"]
