@@ -38,3 +38,5 @@ coverage/
 .tmp/
 tmp/
 # Prisma migrations are tracked — never ignore prisma/migrations/
+# But ignore dev/scratch migration folders
+packages/backend/prisma/migrations/*_devtest/

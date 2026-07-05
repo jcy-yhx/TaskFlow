@@ -1,0 +1,28 @@
+FROM node:24-alpine AS builder
+WORKDIR /app
+
+# ── Install deps ──
+COPY package.json package-lock.json tsconfig.base.json ./
+COPY packages/shared/package.json packages/shared/tsconfig.json packages/shared/
+COPY packages/frontend/package.json packages/frontend/tsconfig.json packages/frontend/
+RUN npm ci --ignore-scripts
+
+# ── Build shared ──
+COPY packages/shared/src packages/shared/src
+RUN npm -w packages/shared run build
+
+# ── Build frontend ──
+COPY packages/frontend/index.html packages/frontend/
+COPY packages/frontend/vite.config.ts packages/frontend/
+COPY packages/frontend/src packages/frontend/src
+RUN npm -w packages/frontend run build
+
+# ── Serve with nginx ──
+FROM nginx:1.27-alpine AS runner
+
+COPY --from=builder /app/packages/frontend/dist /usr/share/nginx/html
+COPY nginx/nginx.railway.conf /etc/nginx/nginx.conf
+
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]

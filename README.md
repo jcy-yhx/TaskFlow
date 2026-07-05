@@ -185,6 +185,11 @@ docker compose -f docker-compose.prod.yml up -d --build
 # Migrations run automatically via docker-entrypoint.sh
 ```
 
+## Deployment to Railway
+
+See [docs/railway-deploy.md](./docs/railway-deploy.md) for a step-by-step guide.
+Zero-config: push to GitHub, add PostgreSQL plugin, deploy backend + frontend services.
+
 ## License
 
 MIT — use this as your own portfolio template.
