@@ -194,6 +194,4 @@ Zero-config: push to GitHub, add PostgreSQL plugin, deploy backend + frontend se
 
 MIT — use this as your own portfolio template.
 
----
 
-🤖 Built with [Claude Code](https://claude.com/claude-code)

@@ -189,6 +189,4 @@ docker compose -f docker-compose.prod.yml up -d --build
 
 MIT — 可作为你自己的作品集模板使用。
 
----
 
-🤖 使用 [Claude Code](https://claude.com/claude-code) 构建
