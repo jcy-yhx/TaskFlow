@@ -5,31 +5,33 @@ import { fileURLToPath } from 'node:url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
-const PORT = process.env.PORT || 80;
+const PORT = process.env.PORT || 8080;
 
-// Serve static files from Vite build output
-app.use(express.static(path.join(__dirname, 'dist')));
+const BE = 'http://taskflowbackend.railway.internal:3000';
 
-// Proxy API calls to the backend service
+// Proxy API — handle before static files
 app.use(
-  '/api',
   createProxyMiddleware({
-    target: 'http://taskflowbackend.railway.internal:3000',
+    target: BE,
     changeOrigin: true,
+    pathFilter: '/api',
   }),
 );
 
 // Proxy WebSocket
 app.use(
-  '/socket.io',
   createProxyMiddleware({
-    target: 'http://taskflowbackend.railway.internal:3000',
+    target: BE,
     changeOrigin: true,
     ws: true,
+    pathFilter: '/socket.io',
   }),
 );
 
-// SPA fallback — serve index.html for any non-file route
+// Serve static files from Vite build output
+app.use(express.static(path.join(__dirname, 'dist')));
+
+// SPA fallback
 app.get('/{*path}', (_req, res) => {
   res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });
