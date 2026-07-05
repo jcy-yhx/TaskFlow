@@ -11,9 +11,10 @@ import {
 import * as ws from '../controllers/workspace.controller.js';
 
 const router = Router();
-
-// All workspace routes require authentication
 router.use(authenticate);
+
+// ── Join by code (public — no workspace membership needed) ──
+router.post('/join', ws.joinByCode);
 
 // ── Invitation acceptance (no workspace membership needed) ──
 router.post('/invitations/:token/accept', ws.acceptInvitation);
@@ -26,6 +27,9 @@ router.get('/', ws.list);
 router.get('/:id', requireWorkspaceMembership, ws.getOne);
 router.patch('/:id', requireWorkspaceMembership, requireRole('ADMIN'), validate(updateWorkspaceSchema), ws.update);
 router.delete('/:id', requireWorkspaceMembership, requireRole('OWNER'), ws.remove);
+
+// ── Join code management ──
+router.post('/:id/reset-join-code', requireWorkspaceMembership, requireRole('ADMIN'), ws.resetJoinCode);
 
 // ── Members ──
 router.get('/:id/members', requireWorkspaceMembership, ws.listMembers);

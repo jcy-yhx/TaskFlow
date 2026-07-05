@@ -22,6 +22,7 @@ export interface Workspace {
   id: string;
   name: string;
   slug: string;
+  joinCode: string;
   description: string | null;
   createdAt: string;
   updatedAt: string;

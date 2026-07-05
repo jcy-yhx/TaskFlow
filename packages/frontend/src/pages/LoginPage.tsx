@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { loginSchema, type LoginInput } from '@taskflow/shared';
@@ -17,6 +17,7 @@ const OAUTH_PROVIDERS = [
 export default function LoginPage() {
   const [serverError, setServerError] = useState<string | null>(null);
   const loginMutation = useLogin();
+  const navigate = useNavigate();
 
   const {
     register,
@@ -31,6 +32,13 @@ export default function LoginPage() {
     try {
       await loginMutation.mutateAsync(data);
       toast.success('Welcome back!');
+
+      // If user came from an invite link, redirect to accept the invitation
+      const pendingToken = sessionStorage.getItem('pendingInviteToken');
+      if (pendingToken) {
+        sessionStorage.removeItem('pendingInviteToken');
+        navigate(`/invitations/${pendingToken}`, { replace: true });
+      }
     } catch (err: unknown) {
       const msg =
         (err as { response?: { data?: { error?: { message?: string } } } })
