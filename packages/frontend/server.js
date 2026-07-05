@@ -28,6 +28,15 @@ app.use(
   }),
 );
 
+// Proxy uploaded files (avatars + attachments)
+app.use(
+  createProxyMiddleware({
+    target: BE,
+    changeOrigin: true,
+    pathFilter: '/uploads',
+  }),
+);
+
 // Serve static files from Vite build output
 app.use(express.static(path.join(__dirname, 'dist')));
 

@@ -4,6 +4,8 @@ A full-stack SaaS task management app built as a portfolio project. JWT authenti
 
 **Stack:** Node.js 24 · Express 5 · Prisma 6 · PostgreSQL 16 · Socket.IO 4 · React 19 · Vite 6 · Tailwind 4 · Docker
 
+**Live Demo:** [taskflowfrontend-production-764b.up.railway.app](https://taskflowfrontend-production-764b.up.railway.app)
+
 **Language:** [中文文档](README_CN.md)
 
 ---

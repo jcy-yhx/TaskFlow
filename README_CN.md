@@ -4,6 +4,8 @@
 
 **技术栈：** Node.js 24 · Express 5 · Prisma 6 · PostgreSQL 16 · Socket.IO 4 · React 19 · Vite 6 · Tailwind 4 · Docker
 
+**在线演示：** [taskflowfrontend-production-764b.up.railway.app](https://taskflowfrontend-production-764b.up.railway.app)
+
 **Language:** [English README](README.md)
 
 ---
