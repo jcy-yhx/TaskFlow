@@ -82,8 +82,9 @@ export function useUpdateTask(projectId: string) {
       const { data } = await apiClient.patch<{ data: Task }>(`/tasks/${id}`, input);
       return data.data;
     },
-    onSuccess: () => {
+    onSuccess: (_data, vars) => {
       qc.invalidateQueries({ queryKey: taskKeys.byStatus(projectId) });
+      qc.invalidateQueries({ queryKey: taskKeys.detail(vars.id) });
     },
   });
 }
@@ -137,8 +138,9 @@ export function useMoveTask(projectId: string) {
       }
       toast.error('Failed to move task');
     },
-    onSettled: () => {
+    onSettled: (_data, _err, vars) => {
       qc.invalidateQueries({ queryKey: taskKeys.byStatus(projectId) });
+      qc.invalidateQueries({ queryKey: taskKeys.detail(vars.id) });
     },
   });
 }
@@ -167,8 +169,9 @@ export function useAssignTask(projectId: string) {
       const { data } = await apiClient.post<{ data: Task }>(`/tasks/${taskId}/assignees`, { userId });
       return data.data;
     },
-    onSuccess: () => {
+    onSuccess: (_data, vars) => {
       qc.invalidateQueries({ queryKey: taskKeys.byStatus(projectId) });
+      qc.invalidateQueries({ queryKey: taskKeys.detail(vars.taskId) });
     },
   });
 }
@@ -181,8 +184,9 @@ export function useUnassignTask(projectId: string) {
       const { data } = await apiClient.delete<{ data: Task }>(`/tasks/${taskId}/assignees/${userId}`);
       return data.data;
     },
-    onSuccess: () => {
+    onSuccess: (_data, vars) => {
       qc.invalidateQueries({ queryKey: taskKeys.byStatus(projectId) });
+      qc.invalidateQueries({ queryKey: taskKeys.detail(vars.taskId) });
     },
   });
 }

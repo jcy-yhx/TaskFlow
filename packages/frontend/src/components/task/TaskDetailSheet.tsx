@@ -1,4 +1,4 @@
-import { useTask, useUpdateTask, useDeleteTask, useAssignTask, useUnassignTask, type TaskStatus, type TaskPriority } from '@/api/tasks';
+import { useTask, useUpdateTask, useMoveTask, useDeleteTask, useAssignTask, useUnassignTask, type TaskStatus, type TaskPriority } from '@/api/tasks';
 import { useMembers } from '@/api/workspaces';
 import { useAuthStore } from '@/stores/auth-store';
 import CommentSection from '@/components/comment/CommentSection';
@@ -20,6 +20,7 @@ export default function TaskDetailSheet({ taskId, projectId, workspaceId, onClos
   const { data: task } = useTask(taskId ?? undefined);
   const { data: members } = useMembers(workspaceId);
   const updateMut = useUpdateTask(projectId);
+  const moveMut = useMoveTask(projectId);
   const deleteMut = useDeleteTask(projectId);
   const assignMut = useAssignTask(projectId);
   const unassignMut = useUnassignTask(projectId);
@@ -44,7 +45,7 @@ export default function TaskDetailSheet({ taskId, projectId, workspaceId, onClos
             <span className="text-xs font-mono text-muted-foreground">{task.id.slice(-6)}</span>
             <select
               value={task.status}
-              onChange={(e) => updateMut.mutate({ id: task.id, status: e.target.value as TaskStatus } as never)}
+              onChange={(e) => moveMut.mutate({ id: task.id, status: e.target.value as TaskStatus, position: task.position })}
               className="text-xs h-7 rounded-md border px-2 bg-muted/50"
             >
               {['BACKLOG', 'TODO', 'IN_PROGRESS', 'IN_REVIEW', 'DONE'].map((s) => (
